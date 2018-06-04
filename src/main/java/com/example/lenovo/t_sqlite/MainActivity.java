@@ -49,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
                 DbManger.execSQL(db, updatasql);
                 db.close();
                 break;
+            case R.id.btn_delete:
+                db = mHelper.getWritableDatabase();
+                String deletesql = "delete from " + Constant.TABLE_NAME + " where "
+                        + Constant._ID + "=2";
+                DbManger.execSQL(db, deletesql);
+                db.close();
+                break;
         }
     }
 }
