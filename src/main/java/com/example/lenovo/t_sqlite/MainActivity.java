@@ -1,9 +1,11 @@
 package com.example.lenovo.t_sqlite;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.lenovo.t_sqlite.Utils.Constant;
 import com.example.lenovo.t_sqlite.Utils.DbManger;
@@ -20,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*
-    点击创建数据库
-    * */
+    /**
+     * 点击创建数据库
+     */
     public void createDb(View view) {
         /* getReadableDatabase() getWritableDatabase();
          *  如果数据库不存在则创建数据库，如果存在直接打开数据库
@@ -55,6 +57,33 @@ public class MainActivity extends AppCompatActivity {
                 String deletesql = "delete from " + Constant.TABLE_NAME + " where "
                         + Constant._ID + "=2";
                 DbManger.execSQL(db, deletesql);
+                db.close();
+                break;
+        }
+    }
+
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_insertAPI:
+                SQLiteDatabase db = mHelper.getWritableDatabase();
+                /**
+                 * insert(String table, String nullColumnHack, ContentValues values)
+                 * String table 表示插入数据表的名称
+                 * String nullColumnHack
+                 * ContentValues vals 键为String类型 HashMap集合
+                 * 返回值 long 表示插入的列数
+                 */
+                ContentValues values = new ContentValues();
+                values.put(Constant._ID, 3);
+                values.put(Constant.NAME, "张三");
+                values.put(Constant.AGE, 30);
+
+                long result = db.insert(Constant.TABLE_NAME, null, values);
+                if (result > 0) {
+                    Toast.makeText(MainActivity.this, "插入数据成功", Toast.LENGTH_LONG).show();
+                } else {
+
+                }
                 db.close();
                 break;
         }
