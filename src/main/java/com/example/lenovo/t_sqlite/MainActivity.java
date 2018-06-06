@@ -1,6 +1,7 @@
 package com.example.lenovo.t_sqlite;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
      * 点击创建数据库
      */
     public void createDb(View view) {
-        /* getReadableDatabase() getWritableDatabase();
+        /** getReadableDatabase() getWritableDatabase();
          *  如果数据库不存在则创建数据库，如果存在直接打开数据库
          *  默认情况下两个函数都表示或者创建可读可写的数据库对象，如果磁盘已满或者是数据库本身权限情况下
          *  getReadableDatabase()打开的是只读数据库
@@ -82,6 +83,35 @@ public class MainActivity extends AppCompatActivity {
                 if (result > 0) {
                     Toast.makeText(MainActivity.this, "插入数据成功", Toast.LENGTH_LONG).show();
                 } else {
+                    Toast.makeText(MainActivity.this, "插入数据失败", Toast.LENGTH_LONG).show();
+                }
+                db.close();
+                break;
+            case R.id.btn_updataApi:
+                /**
+                 * Convenience method for updating rows in the database.
+                 *
+                 * @param table the table to update in
+                 * @param values a map from column names to new column values. null is a
+                 *            valid value that will be translated to NULL.
+                 * @param whereClause the optional WHERE clause to apply when updating.
+                 *            Passing null will update all rows.
+                 * @param whereArgs You may include ?s in the where clause, which
+                 *            will be replaced by the values from whereArgs. The values
+                 *            will be bound as Strings.
+                 * @return the number of rows affected
+                 *update(String table, ContentValues values, String whereClause, String[] whereArgs) {
+                }
+                 */
+                db = mHelper.getWritableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(Constant.NAME, "酵母");
+                int count = db.update(Constant.TABLE_NAME, contentValues, Constant._ID + "=3", null);
+                if (count > 0) {
+                    Toast.makeText(MainActivity.this, "插入数据成功", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(MainActivity.this, "插入数据失败", Toast.LENGTH_LONG).show();
 
                 }
                 db.close();
